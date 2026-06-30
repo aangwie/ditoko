@@ -23,15 +23,6 @@
             .sidebar {
                 transition: all 0.3s ease;
             }
-            .sidebar.collapsed {
-                margin-left: -250px;
-            }
-            .sidebar-link:hover {
-                background-color: rgba(0, 0, 0, 0.05);
-            }
-            .sidebar.active + .main-content {
-                margin-left: 250px;
-            }
         </style>
     </head>
     <body class="font-sans antialiased" x-data="{ sidebarOpen: false }">
@@ -154,19 +145,5 @@
             </div>
         </div>
 
-        <script>
-            function toggleSidebar() {
-                const sidebar = document.getElementById('sidebar');
-                const overlay = document.querySelector('.lg\\:hidden + div');
-                if (window.innerWidth < 1024) {
-                    sidebar.classList.toggle('-translate-x-full');
-                } else {
-                    sidebar.classList.toggle('w-20');
-                    sidebar.classList.toggle('px-3');
-                    sidebar.classList.toggle('py-6');
-                    sidebar.classList.toggle('items-center');
-                }
-            }
-        </script>
     </body>
 </html>
