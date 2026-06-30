@@ -77,6 +77,11 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/docs', function () {
         return view('admin.docs.index');
     })->name('docs');
+    // Update Web from GitHub
+    Route::get('/update-web', [\App\Http\Controllers\Admin\UpdateWebController::class, 'index'])->name('update-web.index');
+    Route::post('/update-web/save-token', [\App\Http\Controllers\Admin\UpdateWebController::class, 'saveToken'])->name('update-web.save-token');
+    Route::post('/update-web/do-update', [\App\Http\Controllers\Admin\UpdateWebController::class, 'update'])->name('update-web.do-update');
+
     // WhatsApp Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
