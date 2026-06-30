@@ -12,7 +12,8 @@ class SettingController extends Controller
     {
         $whatsappSettings = Setting::where('group', 'whatsapp')->get();
         $generalSettings = Setting::where('group', 'general')->get();
-        return view('admin.settings.index', compact('whatsappSettings', 'generalSettings'));
+        $googleSettings = Setting::where('group', 'google')->get();
+        return view('admin.settings.index', compact('whatsappSettings', 'generalSettings', 'googleSettings'));
     }
 
     public function update(Request $request)
