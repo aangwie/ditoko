@@ -28,8 +28,13 @@
             <aside id="sidebar" class="sidebar fixed inset-y-0 left-0 z-50 w-64 bg-ditoko-navy text-white transform transition-transform duration-300 ease-in-out shadow-xl">
                 <div class="flex items-center justify-between h-16 px-6 border-b border-gray-700">
                     <a href="{{ route('dashboard') }}" class="flex items-center space-x-3">
-                        <x-application-logo class="block h-8 w-auto fill-current text-white" />
-                        <span class="text-xl font-bold">{{ \App\Models\Setting::get('site_name', config('app.name')) }}</span>
+                        @php $siteLogo = \App\Models\Setting::get('site_logo'); $siteName = \App\Models\Setting::get('site_name', config('app.name')); @endphp
+                        @if($siteLogo)
+                            <img src="{{ $siteLogo }}" alt="Logo" class="h-8 w-auto">
+                        @else
+                            <x-application-logo class="block h-8 w-auto fill-current text-white" />
+                        @endif
+                        <span class="text-xl font-bold">{{ $siteName }}</span>
                     </a>
                     <button @click="toggleSidebar()" class="lg:hidden text-white hover:text-gray-300">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
