@@ -89,7 +89,7 @@ php artisan serve
 
 ## Tech Stack
 
-- **Backend**: Laravel 11, PHP 8.2
+- **Backend**: Laravel 12, PHP 8.2
 - **Frontend**: Blade, Tailwind CSS, Alpine.js, Vite
 - **Database**: MySQL
 - **Payment**: Midtrans (Snap API)

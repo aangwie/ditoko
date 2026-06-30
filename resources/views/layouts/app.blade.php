@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
+        @php $favicon = \App\Models\Setting::get('site_favicon') ?: \App\Models\Setting::get('site_logo') ?: asset('favicon.ico'); @endphp
+        <link rel="icon" type="image/svg+xml" href="{{ $favicon }}">
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!-- Fonts -->

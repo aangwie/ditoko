@@ -37,7 +37,7 @@
                     <div class="mb-8 flex flex-col items-center">
                         @php $desktopLogo = \App\Models\Setting::get('site_favicon') ?: \App\Models\Setting::get('site_logo') ?: asset('favicon.ico'); @endphp
                         <img src="{{ $desktopLogo }}" alt="Logo" class="h-24 w-auto mb-6">
-                        <h1 class="text-5xl font-bold text-center mb-4">{{ \App\Models\Setting::get('site_name', 'DiToko') }}</h1>
+                        <h1 class="text-5xl font-bold text-center mb-4 text-white">{{ \App\Models\Setting::get('site_name', 'DiToko') }}</h1>
                         <p class="text-xl text-center text-blue-100">Platform E-Commerce Modern & Terpercaya</p>
                     </div>
                     
