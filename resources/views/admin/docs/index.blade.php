@@ -73,30 +73,30 @@
                 <h4 class="text-lg font-semibold text-gray-800 mt-0">Pilih Provider WhatsApp Gateway</h4>
                 <p class="text-gray-600">Saat ini sistem mendukung provider berikut:</p>
                 <ul class="list-disc list-inside space-y-2 text-gray-600">
-                    <li><strong>Fonnte</strong> — <code>https://api.fonnte.com</code></li>
+                    <li><strong>WA Billnesia</strong> — <code>https://wa.billnesia.com</code></li>
                     <li>Dapat dikembangkan untuk provider lain melalui kelas <code>App\Services\WhatsAppService</code></li>
                 </ul>
 
-                <h4 class="text-lg font-semibold text-gray-800 mt-6">1. Daftar / Login ke Fonnte</h4>
+                <h4 class="text-lg font-semibold text-gray-800 mt-6">1. Daftar / Login ke WA Billnesia</h4>
                 <ol class="list-decimal list-inside space-y-2 text-gray-600">
-                    <li>Buka <a href="https://fonnte.com" target="_blank" class="text-ditoko-navy underline">fonnte.com</a></li>
+                    <li>Buka <a href="https://wa.billnesia.com" target="_blank" class="text-ditoko-navy underline">wa.billnesia.com</a></li>
                     <li>Daftar akun (gratis tersedia) dan login</li>
                     <li>Setelah login, navigasi ke dashboard</li>
                 </ol>
 
                 <h4 class="text-lg font-semibold text-gray-800 mt-6">2. Dapatkan API Key</h4>
                 <ol class="list-decimal list-inside space-y-2 text-gray-600">
-                    <li>Di dashboard Fonnte, buka menu <strong>API / Token</strong> atau <strong>Settings</strong></li>
+                    <li>Di dashboard WA Billnesia, buka menu <strong>API / Token</strong> atau <strong>Settings</strong></li>
                     <li>Copy <strong>API Key / Token</strong> yang tersedia</li>
                     <li>Pastikan akun sudah <strong>terverifikasi</strong> (nomor & email)</li>
-                    <li>Untuk testing, pastikan <strong>saldo mencukupi</strong> (Fonnte memberikan saldo gratis terbatas)</li>
+                    <li>Untuk testing, pastikan <strong>saldo mencukupi</strong> (WA Billnesia memberikan saldo gratis terbatas)</li>
                 </ol>
 
                 <h4 class="text-lg font-semibold text-gray-800 mt-6">3. Input di Halaman Settings</h4>
                 <ol class="list-decimal list-inside space-y-2 text-gray-600">
                     <li>Buka menu <strong>Settings</strong> di sidebar admin</li>
                     <li>Scroll ke bagian <strong>Konfigurasi WhatsApp Gateway</strong></li>
-                    <li>Isi <strong>API Key</strong> dari Fonnte</li>
+                    <li>Isi <strong>API Key</strong> dari WA Billnesia</li>
                     <li>Isi <strong>Nomor Pengirim</strong> — nomor WhatsApp yang akan mengirim notifikasi</li>
                     <li>Klik <strong>Simpan Pengaturan WhatsApp</strong></li>
                 </ol>
@@ -104,7 +104,7 @@
                 <h4 class="text-lg font-semibold text-gray-800 mt-6">4. Test Kirim Pesan</h4>
                 <ol class="list-decimal list-inside space-y-2 text-gray-600">
                     <li>Setelah menyimpan konfigurasi, scroll ke bagian <strong>Test WhatsApp</strong></li>
-                    <li>Masukkan nomor tujuan (format: <code>08123456789</code>)</li>
+                    <li>Masukkan nomor tujuan (format: <code>628123456789</code>)</li>
                     <li>Klik <strong>Test</strong></li>
                     <li>Jika berhasil, akan muncul log <strong>success</strong> di bawah form test</li>
                     <li>Jika gagal, periksa log error untuk debugging</li>
@@ -122,7 +122,7 @@
                     <p class="text-sm text-blue-700">
                         💡 <strong>Kustomisasi Provider:</strong> Untuk mengganti provider WhatsApp,
                         edit file <code>app/Services/WhatsAppService.php</code>.
-                        Service saat ini menggunakan <strong>Fonnte API</strong>.
+                        Service saat ini menggunakan <strong>WA Billnesia API</strong>.
                     </p>
                 </div>
             </div>
