@@ -62,8 +62,8 @@ php artisan serve
 
 | Role    | Email              | Password |
 |---------|--------------------|----------|
-| Admin   | admin@ditoko.test  | password |
-| Pembeli | buyer@ditoko.test  | password |
+| Admin   | admin@ditoko.id    | admin123 |
+| Pembeli | budi@example.com   | buyer123 |
 
 ## Konfigurasi
 
