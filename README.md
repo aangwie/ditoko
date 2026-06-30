@@ -1,45 +1,45 @@
-# DiToko - E-Commerce App
+# DiToko - Aplikasi E-Commerce
 
-Laravel-based e-commerce platform with multi-role auth (admin/buyer), product management, shopping cart, Midtrans payment gateway, WhatsApp notifications, and real-time admin-buyer chat.
+Platform e-commerce berbasis Laravel dengan multi-role auth (admin/pembeli), manajemen produk, keranjang belanja, payment gateway Midtrans, notifikasi WhatsApp, dan chat real-time antara admin dan pembeli.
 
-## Features
+## Fitur
 
-- **Multi-Role Auth**: Register/login with email, Google OAuth
-- **Admin Dashboard**: Manage products, orders, settings
-- **Buyer Dashboard**: Browse products, manage cart, checkout
-- **Shopping Cart**: Add/remove items, update quantities
-- **Payment Gateway**: Midtrans integration (snap, bank transfer, etc.)
-- **WhatsApp Notifications**: Order status updates via WhatsApp
-- **Admin-Buyer Chat**: Real-time messaging per order
-- **Order Management**: Track status (pending, paid, processing, shipped, completed, cancelled)
-- **Profile Management**: Update profile, password
+- **Multi-Role Auth**: Registrasi/login dengan email, Google OAuth
+- **Dashboard Admin**: Kelola produk, pesanan, pengaturan
+- **Dashboard Pembeli**: Lihat produk, kelola keranjang, checkout
+- **Keranjang Belanja**: Tambah/hapus item, ubah jumlah
+- **Payment Gateway**: Integrasi Midtrans (snap, transfer bank, dll.)
+- **Notifikasi WhatsApp**: Update status pesanan via WhatsApp
+- **Chat Admin-Pembeli**: Pesan real-time per pesanan
+- **Manajemen Pesanan**: Lacak status (pending, paid, processing, shipped, completed, cancelled)
+- **Manajemen Profil**: Update profil, ganti password
 
-## Requirements
+## Persyaratan Sistem
 
 - PHP 8.2+
 - Composer 2
 - MySQL/MariaDB
-- Node.js & NPM (for Vite asset compilation)
-- Web server (Apache/Nginx) or Laravel Valet/Artisan serve
+- Node.js & NPM (untuk kompilasi aset Vite)
+- Web server (Apache/Nginx) atau Laravel Artisan serve
 
-## Installation
+## Instalasi
 
 ```bash
-# 1. Clone
+# 1. Clone repository
 git clone https://github.com/aangwie/ditoko.git
 cd ditoko
 
-# 2. Install PHP dependencies
+# 2. Install dependensi PHP
 composer install
 
-# 3. Install JS dependencies
+# 3. Install dependensi JS
 npm install
 
-# 4. Environment setup
+# 4. Setup environment
 cp .env.example .env
 php artisan key:generate
 
-# 5. Configure .env — edit database, mail, Midtrans, WhatsApp, Google OAuth
+# 5. Konfigurasi .env — edit database, mail, Midtrans, WhatsApp, Google OAuth
 #    DB_DATABASE=ditoko
 #    DB_USERNAME=root
 #    DB_PASSWORD=
@@ -47,45 +47,45 @@ php artisan key:generate
 # 6. Database
 php artisan migrate --seed
 
-# 7. Storage link (for product images)
+# 7. Storage link (untuk gambar produk)
 php artisan storage:link
 
-# 8. Build assets
+# 8. Build aset
 npm run build
-# or for dev: npm run dev
+# atau untuk development: npm run dev
 
-# 9. Start server
+# 9. Jalankan server
 php artisan serve
 ```
 
-## Default Accounts (Seeder)
+## Akun Default (Seeder)
 
-| Role  | Email              | Password |
-|-------|--------------------|----------|
-| Admin | admin@ditoko.test  | password |
-| Buyer | buyer@ditoko.test  | password |
+| Role    | Email              | Password |
+|---------|--------------------|----------|
+| Admin   | admin@ditoko.test  | password |
+| Pembeli | buyer@ditoko.test  | password |
 
-## Configuration
+## Konfigurasi
 
-### .env Variables
+### Variabel .env
 
-| Key | Description |
-|-----|-------------|
-| `MIDTRANS_SERVER_KEY` | Midtrans server key |
+| Key | Deskripsi |
+|-----|-----------|
+| `MIDTRANS_SERVER_KEY` | Server key Midtrans |
 | `MIDTRANS_IS_PRODUCTION` | `true`/`false` |
-| `WHATSAPP_API_URL` | WhatsApp API endpoint |
-| `WHATSAPP_API_TOKEN` | WhatsApp API token |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth secret |
-| `GOOGLE_REDIRECT_URI` | e.g. `http://localhost/auth/google/callback` |
+| `WHATSAPP_API_URL` | Endpoint API WhatsApp |
+| `WHATSAPP_API_TOKEN` | Token API WhatsApp |
+| `GOOGLE_CLIENT_ID` | Client ID Google OAuth |
+| `GOOGLE_CLIENT_SECRET` | Secret Google OAuth |
+| `GOOGLE_REDIRECT_URI` | Contoh: `http://localhost/auth/google/callback` |
 
-### Admin Settings (via Web UI)
+### Pengaturan Admin (via Web UI)
 
-- Site name, logo, favicon, meta description
-- WhatsApp number
-- Midtrans configuration
-- About/contact info
-- Privacy policy, terms
+- Nama toko, logo, favicon, meta description
+- Nomor WhatsApp
+- Konfigurasi Midtrans
+- Informasi tentang/kontak
+- Kebijakan privasi, syarat & ketentuan
 
 ## Tech Stack
 
@@ -94,9 +94,9 @@ php artisan serve
 - **Database**: MySQL
 - **Payment**: Midtrans (Snap API)
 - **Auth**: Laravel Breeze, Google OAuth (Socialite)
-- **Notifications**: WhatsApp API (custom service)
+- **Notifikasi**: WhatsApp API (custom service)
 - **Chat**: Database-driven messaging (polling)
 
-## License
+## Lisensi
 
 MIT
