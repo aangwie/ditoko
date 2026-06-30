@@ -1,66 +1,102 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# DiToko - E-Commerce App
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Laravel-based e-commerce platform with multi-role auth (admin/buyer), product management, shopping cart, Midtrans payment gateway, WhatsApp notifications, and real-time admin-buyer chat.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- **Multi-Role Auth**: Register/login with email, Google OAuth
+- **Admin Dashboard**: Manage products, orders, settings
+- **Buyer Dashboard**: Browse products, manage cart, checkout
+- **Shopping Cart**: Add/remove items, update quantities
+- **Payment Gateway**: Midtrans integration (snap, bank transfer, etc.)
+- **WhatsApp Notifications**: Order status updates via WhatsApp
+- **Admin-Buyer Chat**: Real-time messaging per order
+- **Order Management**: Track status (pending, paid, processing, shipped, completed, cancelled)
+- **Profile Management**: Update profile, password
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+- PHP 8.2+
+- Composer 2
+- MySQL/MariaDB
+- Node.js & NPM (for Vite asset compilation)
+- Web server (Apache/Nginx) or Laravel Valet/Artisan serve
 
-## Learning Laravel
+## Installation
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```bash
+# 1. Clone
+git clone https://github.com/aangwie/ditoko.git
+cd ditoko
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# 2. Install PHP dependencies
+composer install
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# 3. Install JS dependencies
+npm install
 
-## Laravel Sponsors
+# 4. Environment setup
+cp .env.example .env
+php artisan key:generate
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+# 5. Configure .env — edit database, mail, Midtrans, WhatsApp, Google OAuth
+#    DB_DATABASE=ditoko
+#    DB_USERNAME=root
+#    DB_PASSWORD=
 
-### Premium Partners
+# 6. Database
+php artisan migrate --seed
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+# 7. Storage link (for product images)
+php artisan storage:link
 
-## Contributing
+# 8. Build assets
+npm run build
+# or for dev: npm run dev
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+# 9. Start server
+php artisan serve
+```
 
-## Code of Conduct
+## Default Accounts (Seeder)
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+| Role  | Email              | Password |
+|-------|--------------------|----------|
+| Admin | admin@ditoko.test  | password |
+| Buyer | buyer@ditoko.test  | password |
 
-## Security Vulnerabilities
+## Configuration
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### .env Variables
+
+| Key | Description |
+|-----|-------------|
+| `MIDTRANS_SERVER_KEY` | Midtrans server key |
+| `MIDTRANS_IS_PRODUCTION` | `true`/`false` |
+| `WHATSAPP_API_URL` | WhatsApp API endpoint |
+| `WHATSAPP_API_TOKEN` | WhatsApp API token |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth secret |
+| `GOOGLE_REDIRECT_URI` | e.g. `http://localhost/auth/google/callback` |
+
+### Admin Settings (via Web UI)
+
+- Site name, logo, favicon, meta description
+- WhatsApp number
+- Midtrans configuration
+- About/contact info
+- Privacy policy, terms
+
+## Tech Stack
+
+- **Backend**: Laravel 11, PHP 8.2
+- **Frontend**: Blade, Tailwind CSS, Alpine.js, Vite
+- **Database**: MySQL
+- **Payment**: Midtrans (Snap API)
+- **Auth**: Laravel Breeze, Google OAuth (Socialite)
+- **Notifications**: WhatsApp API (custom service)
+- **Chat**: Database-driven messaging (polling)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+MIT
