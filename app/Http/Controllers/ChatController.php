@@ -52,14 +52,26 @@ class ChatController extends Controller
     {
         $request->validate([
             'receiver_id' => 'required|exists:users,id',
-            'message' => 'required|string|max:1000',
+            'message' => 'nullable|string|max:1000',
+            'attachment' => 'nullable|file|mimes:jpg,jpeg,png,gif,webp,pdf,docx,doc|max:10240',
         ]);
 
-        $message = Message::create([
+        if (!$request->message && !$request->hasFile('attachment')) {
+            return response()->json(['error' => 'Message or attachment required'], 422);
+        }
+
+        $data = [
             'sender_id' => Auth::id(),
             'receiver_id' => $request->receiver_id,
-            'message' => $request->message,
-        ]);
+            'message' => $request->message ?? '',
+        ];
+
+        if ($request->hasFile('attachment')) {
+            $path = $request->file('attachment')->store('chat-attachments', 'public');
+            $data['attachment'] = $path;
+        }
+
+        $message = Message::create($data);
 
         return response()->json($message->load('sender'));
     }
