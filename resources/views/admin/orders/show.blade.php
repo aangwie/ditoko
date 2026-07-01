@@ -11,11 +11,13 @@
             <h1 class="text-xl font-bold text-gray-800">Pesanan {{ $order->order_number }}</h1>
             <p class="text-sm text-gray-500">{{ $order->created_at->format('d M Y H:i') }}</p>
         </div>
+        @php $needsConfirm = $order->payment_status === 'pending' && $order->proof_of_payment; @endphp
         <span class="px-4 py-1.5 rounded-full text-sm font-semibold
             @if ($order->payment_status === 'success') bg-green-100 text-green-700
             @elseif ($order->payment_status === 'failed') bg-red-100 text-red-700
+            @elseif ($needsConfirm) bg-orange-100 text-orange-700
             @else bg-yellow-100 text-yellow-700 @endif">
-            {{ ucfirst($order->payment_status) }}
+            {{ $needsConfirm ? 'Need Confirmation' : ucfirst($order->payment_status) }}
         </span>
     </div>
 
@@ -54,13 +56,13 @@
 </div>
 @endif
 
-<!-- Verify Button (for manual transfer) -->
+<!-- Confirm / Cancel buttons -->
 <div class="flex gap-4">
-    @if ($order->payment_method === 'manual_transfer' && $order->payment_status === 'pending')
-    <form action="{{ route('admin.orders.verify', $order) }}" method="POST" onsubmit="return confirm('Verifikasi pembayaran ini?')">
+    @if ($order->payment_status === 'pending' && $order->proof_of_payment)
+    <form action="{{ route('admin.orders.verify', $order) }}" method="POST" onsubmit="return confirm('Setujui pesanan ini? Pembeli akan mendapat akses download.')">
         @csrf
         <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition font-medium">
-            Verifikasi & Setujui Pembayaran
+            Setujui Pesanan
         </button>
     </form>
     @endif
