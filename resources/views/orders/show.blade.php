@@ -50,18 +50,35 @@
         </div>
     </div>
 
-    <!-- Manual Transfer: Bank Info & Upload Proof -->
-    @if ($order->payment_method === 'manual_transfer' && $order->payment_status === 'pending')
+    @php $bankSettings = \App\Models\Setting::getByGroup('bank'); @endphp
+
+    <!-- Payment Instructions -->
+    @if ($order->payment_status === 'pending' && in_array($order->payment_method, ['bank_transfer', 'qris']))
     <div class="bg-white rounded-xl shadow-md p-6 mb-6">
-        <h2 class="font-semibold text-gray-800 mb-4">Instruksi Pembayaran Transfer Manual</h2>
+        <h2 class="font-semibold text-gray-800 mb-4">Instruksi Pembayaran</h2>
         <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
-            <p class="text-sm text-blue-800 font-medium">Silakan transfer ke rekening berikut:</p>
-            <div class="mt-3 space-y-2 text-sm">
-                <p><strong>Bank BRI</strong> — 1234-5678-9012-3456 a.n. DiToko</p>
-                <p><strong>Bank BCA</strong> — 9876-5432-1098-7654 a.n. DiToko</p>
-                <p><strong>Bank Mandiri</strong> — 5647-3829-1047-2839 a.n. DiToko</p>
-            </div>
-            <p class="text-xs text-blue-600 mt-3">Total transfer: <strong class="text-ditoko-orange">Rp {{ number_format($order->total_price, 0, ',', '.') }}</strong></p>
+            @if ($order->payment_method === 'bank_transfer')
+                <p class="text-sm text-blue-800 font-medium">Silakan transfer ke rekening berikut:</p>
+                <div class="mt-3 space-y-2 text-sm">
+                    @if (!empty($bankSettings['bank_name']) && !empty($bankSettings['bank_account']))
+                    <p><strong>{{ $bankSettings['bank_name'] }}</strong> — {{ $bankSettings['bank_account'] }} a.n. {{ $bankSettings['bank_holder'] ?? '-' }}</p>
+                    @endif
+                </div>
+            @elseif ($order->payment_method === 'qris' && !empty($bankSettings['qris_image']))
+                <p class="text-sm text-blue-800 font-medium mb-3">Scan QRIS berikut untuk pembayaran:</p>
+                <img src="{{ $bankSettings['qris_image'] }}" alt="QRIS" class="w-48 h-48 object-contain rounded-lg border bg-white cursor-pointer hover:opacity-90 transition" onclick="document.getElementById('qris-modal').classList.remove('hidden')">
+                <!-- Lightbox Modal -->
+                <div id="qris-modal" class="fixed inset-0 z-50 hidden bg-black/70" onclick="if(event.target===this)document.getElementById('qris-modal').classList.add('hidden')">
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px]">
+                        <img src="{{ $bankSettings['qris_image'] }}" alt="QRIS" class="w-full h-auto object-contain rounded-lg bg-white p-2">
+                        <button onclick="document.getElementById('qris-modal').classList.add('hidden')" class="absolute -top-3 -right-3 text-white bg-black/70 rounded-full w-7 h-7 flex items-center justify-center text-lg hover:bg-black">&times;</button>
+                    </div>
+                </div>
+            @endif
+            @if (!empty($bankSettings['payment_instructions']))
+                <div class="mt-4 text-sm text-blue-800">{!! nl2br(e($bankSettings['payment_instructions'])) !!}</div>
+            @endif
+            <p class="text-xs text-blue-600 mt-3">Total pembayaran: <strong class="text-ditoko-orange">Rp {{ number_format($order->total_price, 0, ',', '.') }}</strong></p>
         </div>
 
         @if ($order->proof_of_payment)

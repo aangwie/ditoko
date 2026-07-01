@@ -23,8 +23,9 @@
         </div>
     </nav>
 
+    @php $bankSettings = \App\Models\Setting::getByGroup('bank'); @endphp
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10"
-         x-data="{ payment: 'manual_transfer' }">
+         x-data="{ payment: 'bank_transfer' }">
         <h1 class="text-2xl font-bold text-gray-800 mb-6">Checkout</h1>
         @if ($errors->any())
             <div class="mb-6 bg-red-100 border-l-2 border-red-500 text-red-700 p-4 rounded-lg">{{ $errors->first() }}</div>
@@ -79,16 +80,30 @@
                             </div>
                         </label>
                         @endif
+                        @if (!empty($bankSettings['bank_name']) && !empty($bankSettings['bank_account']))
                         <label class="block bg-white rounded-xl shadow-md p-4 cursor-pointer hover:border-ditoko-orange border-2 border-ditoko-orange"
-                               @click="payment = 'manual_transfer'">
+                               @click="payment = 'bank_transfer'">
                             <div class="flex items-center gap-3">
-                                <input type="radio" name="_method_radio" value="manual_transfer" class="text-ditoko-orange focus:ring-ditoko-orange" @click="payment = 'manual_transfer'" checked>
+                                <input type="radio" name="_method_radio" value="bank_transfer" class="text-ditoko-orange focus:ring-ditoko-orange" @click="payment = 'bank_transfer'" checked>
                                 <div>
-                                    <p class="font-semibold text-gray-800">Transfer Manual (BRI/BCA/Mandiri)</p>
-                                    <p class="text-sm text-gray-500">Konfirmasi manual oleh admin</p>
+                                    <p class="font-semibold text-gray-800">Transfer Bank ({{ $bankSettings['bank_name'] }})</p>
+                                    <p class="text-sm text-gray-500">{{ $bankSettings['bank_account'] }} a.n. {{ $bankSettings['bank_holder'] ?? '-' }}</p>
                                 </div>
                             </div>
                         </label>
+                        @endif
+                        @if (!empty($bankSettings['qris_image']))
+                        <label class="block bg-white rounded-xl shadow-md p-4 cursor-pointer hover:border-ditoko-orange border-2 border-transparent"
+                               @click="payment = 'qris'">
+                            <div class="flex items-center gap-3">
+                                <input type="radio" name="_method_radio" value="qris" class="text-ditoko-orange focus:ring-ditoko-orange" @click="payment = 'qris'">
+                                <div>
+                                    <p class="font-semibold text-gray-800">QRIS</p>
+                                    <p class="text-sm text-gray-500">Scan QRIS via GoPay, OVO, Dana, dll</p>
+                                </div>
+                            </div>
+                        </label>
+                        @endif
                     </div>
                     <button type="submit" class="w-full mt-6 bg-ditoko-orange text-white py-3 px-6 rounded-xl font-semibold hover:bg-orange-600 transition shadow-md text-lg">Buat Pesanan</button>
                 </form>

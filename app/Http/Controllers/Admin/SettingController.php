@@ -47,6 +47,41 @@ class SettingController extends Controller
             ->with('success', 'Settings berhasil diupdate!');
     }
 
+    public function bankIndex()
+    {
+        $bankSettings = Setting::getByGroup('bank');
+        return view('admin.settings.bank', compact('bankSettings'));
+    }
+
+    public function bankUpdate(Request $request)
+    {
+        $request->validate([
+            'settings' => 'nullable|array',
+            'settings.*' => 'nullable|string',
+            'qris_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'remove_qris' => 'nullable|in:1',
+        ]);
+
+        if ($request->remove_qris === '1') {
+            Setting::set('qris_image', '');
+        }
+
+        if ($request->hasFile('qris_image')) {
+            $imageData = base64_encode(file_get_contents($request->file('qris_image')->path()));
+            $mime = $request->file('qris_image')->getMimeType();
+            Setting::set('qris_image', 'data:' . $mime . ';base64,' . $imageData);
+        }
+
+        if ($request->settings) {
+            foreach ($request->settings as $key => $value) {
+                Setting::set($key, $value ?? '');
+            }
+        }
+
+        return redirect()->route('admin.settings.bank.index')
+            ->with('success', 'Pengaturan pembayaran berhasil diupdate!');
+    }
+
     public function testWhatsApp(Request $request)
     {
         $request->validate([

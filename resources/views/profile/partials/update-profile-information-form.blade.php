@@ -24,6 +24,30 @@
         </div>
 
         <div>
+            <x-input-label for="phone" :value="__('No. Telepon')" />
+            <x-text-input id="phone" name="phone" type="text" class="mt-1 block w-full" :value="old('phone', $user->phone)" placeholder="08xxxxxxxxxx" />
+            <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+        </div>
+
+        <div>
+            <x-input-label for="address" :value="__('Alamat')" />
+            <textarea id="address" name="address" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500" rows="3" placeholder="Alamat lengkap">{{ old('address', $user->address) }}</textarea>
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+
+        <div>
+            <x-input-label for="bank" :value="__('Bank')" />
+            <x-text-input id="bank" name="bank" type="text" class="mt-1 block w-full" :value="old('bank', $user->bank)" placeholder="BCA / Mandiri / dst" />
+            <x-input-error class="mt-2" :messages="$errors->get('bank')" />
+        </div>
+
+        <div>
+            <x-input-label for="bank_number" :value="__('No. Rekening')" />
+            <x-text-input id="bank_number" name="bank_number" type="text" class="mt-1 block w-full" :value="old('bank_number', $user->bank_number)" placeholder="Nomor rekening" />
+            <x-input-error class="mt-2" :messages="$errors->get('bank_number')" />
+        </div>
+
+        <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />

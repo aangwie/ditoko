@@ -40,7 +40,7 @@ class CheckoutController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'payment_method' => 'required|in:midtrans,manual_transfer',
+            'payment_method' => 'required|in:midtrans,bank_transfer,qris',
         ]);
 
         $cart = session()->get('cart', []);

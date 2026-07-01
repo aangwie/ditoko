@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\BuyerController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\SettingController;
@@ -74,6 +75,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
     Route::post('/orders/{order}/verify', [AdminOrderController::class, 'verify'])->name('orders.verify');
     Route::post('/orders/{order}/cancel', [AdminOrderController::class, 'cancel'])->name('orders.cancel');
+    Route::get('/buyers', [BuyerController::class, 'index'])->name('buyers.index');
+    Route::get('/buyers/data', [BuyerController::class, 'data'])->name('buyers.data');
+
     Route::get('/docs', function () {
         return view('admin.docs.index');
     })->name('docs');
@@ -82,10 +86,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::post('/update-web/save-token', [\App\Http\Controllers\Admin\UpdateWebController::class, 'saveToken'])->name('update-web.save-token');
     Route::post('/update-web/do-update', [\App\Http\Controllers\Admin\UpdateWebController::class, 'update'])->name('update-web.do-update');
 
-    // WhatsApp Settings
+    // Settings
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::put('/settings', [SettingController::class, 'update'])->name('settings.update');
     Route::post('/settings/test-whatsapp', [SettingController::class, 'testWhatsApp'])->name('settings.test-whatsapp');
+
+    // Bank & Payment Settings
+    Route::get('/settings/bank', [SettingController::class, 'bankIndex'])->name('settings.bank.index');
+    Route::put('/settings/bank', [SettingController::class, 'bankUpdate'])->name('settings.bank.update');
 });
 
 // Midtrans Webhook (no CSRF)
