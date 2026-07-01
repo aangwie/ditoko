@@ -14,6 +14,7 @@ class Product extends Model
         'price',
         'cover_image',
         'file_path',
+        'external_link',
     ];
 
     protected function casts(): array

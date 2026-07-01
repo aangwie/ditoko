@@ -31,6 +31,11 @@ class DownloadController extends Controller
             abort(404);
         }
 
+        // If product has external link, redirect
+        if ($product->external_link) {
+            return redirect()->away($product->external_link);
+        }
+
         // Check if file exists
         if (!$product->file_path || !Storage::exists($product->file_path)) {
             return back()->with('error', 'File produk tidak ditemukan.');

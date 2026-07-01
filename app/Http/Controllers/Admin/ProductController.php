@@ -37,8 +37,14 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:400',
-            'file_product' => 'required|file|mimes:pdf,zip,rar,doc,docx|max:102400',
+            'external_link' => 'nullable|url|max:2048',
+            'file_product' => 'nullable|file|mimes:pdf,zip,rar,doc,docx|max:102400',
         ]);
+
+        // Require either file_product or external_link
+        if (!$request->hasFile('file_product') && !$request->filled('external_link')) {
+            return back()->withErrors(['file_product' => 'Upload file atau isi tautan eksternal.'])->withInput();
+        }
 
         $validated['slug'] = Str::slug($validated['name']);
         $validated['price'] = (int) $validated['price'];
@@ -57,7 +63,11 @@ class ProductController extends Controller
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('private/products', $fileName);
             $validated['file_path'] = 'products/' . $fileName;
+        } else {
+            $validated['file_path'] = null;
         }
+
+        $validated['external_link'] = $request->input('external_link');
 
         Product::create($validated);
 
@@ -83,6 +93,7 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'cover_image' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:400',
+            'external_link' => 'nullable|url|max:2048',
             'file_product' => 'nullable|file|mimes:pdf,zip,rar,doc,docx|max:102400',
         ]);
 
@@ -111,7 +122,12 @@ class ProductController extends Controller
             $fileName = time() . '_' . $file->getClientOriginalName();
             $file->storeAs('private/products', $fileName);
             $validated['file_path'] = 'products/' . $fileName;
+            $validated['external_link'] = null; // clear link if file uploaded
+        } elseif ($request->has('external_link')) {
+            $validated['file_path'] = null; // clear file if link set
         }
+
+        $validated['external_link'] = $request->input('external_link');
 
         $product->update($validated);
 

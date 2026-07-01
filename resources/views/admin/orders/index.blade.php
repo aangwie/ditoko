@@ -31,11 +31,15 @@
                 <td class="px-6 py-4 text-ditoko-orange font-semibold">Rp {{ number_format($order->total_price, 0, ',', '.') }}</td>
                 <td class="px-6 py-4 text-sm">{{ $order->payment_method === 'midtrans' ? 'Midtrans' : 'Manual' }}</td>
                 <td class="px-6 py-4">
+                    @php
+                        $needsConfirm = $order->payment_status === 'pending' && $order->proof_of_payment;
+                    @endphp
                     <span class="px-3 py-1 rounded-full text-xs font-semibold
                         @if ($order->payment_status === 'success') bg-green-100 text-green-700
                         @elseif ($order->payment_status === 'failed') bg-red-100 text-red-700
+                        @elseif ($needsConfirm) bg-orange-100 text-orange-700
                         @else bg-yellow-100 text-yellow-700 @endif">
-                        {{ ucfirst($order->payment_status) }}
+                        {{ $needsConfirm ? 'Need Confirmation' : ucfirst($order->payment_status) }}
                     </span>
                 </td>
                 <td class="px-6 py-4">

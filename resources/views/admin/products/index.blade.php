@@ -22,7 +22,7 @@
                     <th class="px-6 py-4">Gambar</th>
                     <th class="px-6 py-4">Nama Produk</th>
                     <th class="px-6 py-4">Harga</th>
-                    <th class="px-6 py-4">File</th>
+                    <th class="px-6 py-4">File / Tautan</th>
                     <th class="px-6 py-4">Aksi</th>
                 </tr>
             </thead>
@@ -38,7 +38,15 @@
                     </td>
                     <td class="px-6 py-4 font-medium text-gray-800">{{ $product->name }}</td>
                     <td class="px-6 py-4 text-ditoko-orange font-semibold">Rp {{ number_format($product->price, 0, ',', '.') }}</td>
-                    <td class="px-6 py-4 text-sm text-gray-500">{{ $product->file_path ? basename($product->file_path) : '-' }}</td>
+                    <td class="px-6 py-4 text-sm text-gray-500">
+                        @if ($product->file_path)
+                            {{ basename($product->file_path) }}
+                        @elseif ($product->external_link)
+                            <a href="{{ $product->external_link }}" target="_blank" class="text-blue-600 hover:underline text-xs">{{ Str::limit($product->external_link, 40) }}</a>
+                        @else
+                            -
+                        @endif
+                    </td>
                     <td class="px-6 py-4">
                         <div class="flex items-center gap-2">
                             <a href="{{ route('admin.products.edit', $product) }}"

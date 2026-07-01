@@ -46,6 +46,17 @@
             @error('cover_image') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
         </div>
 
+        <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-700 mb-1">Tautan Eksternal</label>
+            <input type="url" name="external_link" value="{{ old('external_link', $product->external_link) }}" placeholder="https://drive.google.com/..."
+                   class="w-full rounded-lg border-gray-300 shadow-sm focus:border-ditoko-orange focus:ring-ditoko-orange @error('external_link') border-red-500 @enderror">
+            <p class="text-xs text-gray-500 mt-1">Isi jika produk dari sumber luar (Google Drive, dll). Upload file atau isi tautan, tidak keduanya.</p>
+            @if ($product->external_link)
+                <p class="text-xs text-blue-600 mt-1">Tautan saat ini: <a href="{{ $product->external_link }}" target="_blank" class="underline">{{ $product->external_link }}</a></p>
+            @endif
+            @error('external_link') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+        </div>
+
         <div class="mb-6">
             <label class="block text-sm font-medium text-gray-700 mb-1">File Produk (PDF/ZIP/RAR/DOC - Max 100MB)</label>
             @if ($product->file_path)
